@@ -10,4 +10,7 @@ public record PersonInfoDTO(
         String dog,
         PersonShortInfo mother
 ) {
+    public PersonInfoDTO withAge(int newAge) {
+        return new PersonInfoDTO(name, newAge, children, married, dog, mother.withAge(newAge));
+    }
 }
