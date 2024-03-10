@@ -1,6 +1,5 @@
 package com.example.producer.kafka;
 
-import com.example.producer.dto.PersonInfoDTO;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class KafkaConfig {
+public class KafkaProducerConfig {
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
@@ -27,12 +26,12 @@ public class KafkaConfig {
         return properties;
     }
 
-    private ProducerFactory<String, PersonInfoDTO> producerFactory() {
+    private ProducerFactory<String, Object> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfig());
     }
 
     @Bean
-    public KafkaTemplate<String, PersonInfoDTO> kafkaTemplate(ProducerFactory<String, PersonInfoDTO> producerFactory) {
+    public KafkaTemplate<String, Object> kafkaTemplate(ProducerFactory<String, Object> producerFactory) {
         return new KafkaTemplate<>(producerFactory());
     }
 }
