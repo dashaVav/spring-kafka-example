@@ -10,6 +10,7 @@ import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
+import org.springframework.kafka.support.serializer.JsonDeserializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,13 +28,13 @@ public class KafkaConsumerConfig {
         return properties;
     }
 
-    private ConsumerFactory<String, Object> consumerFactory() {
+    private ConsumerFactory<String, String> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfig());
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Object>> factory() {
-        ConcurrentKafkaListenerContainerFactory<String, Object> factory
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, String>> factory() {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory
                 = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
