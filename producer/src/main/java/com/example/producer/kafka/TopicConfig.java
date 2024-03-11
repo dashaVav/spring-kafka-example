@@ -12,7 +12,7 @@ public class TopicConfig {
 
     @Bean
     public NewTopic newPersonInfoTopic() {
-        return new NewTopic(personInfoTopic, 1, (short) 1);
+        return new NewTopic(personInfoTopic, 2, (short) 1);
     }
 
     @Value("${kafka.topic.name.json}")

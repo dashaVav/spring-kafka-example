@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class Producer {
@@ -26,7 +28,7 @@ public class Producer {
 
     public void sendMessage(PersonInfoDTO personInfo) {
         try {
-            kafkaTemplate.send(personInfoTopic, objectMapper.writeValueAsString(personInfo));
+            kafkaTemplate.send(personInfoTopic, UUID.randomUUID().toString(), objectMapper.writeValueAsString(personInfo));
             LOGGER.info("Message with the text \"" + personInfo + "\" added to  kafka topic \"" + personInfoTopic + "\"");
         } catch (JsonProcessingException ignore) {
         }
@@ -34,7 +36,7 @@ public class Producer {
 
     public void sendJson(JsonNode personInfo) {
         try {
-            kafkaTemplate.send(jsonTopic, objectMapper.writeValueAsString(personInfo));
+            kafkaTemplate.send(jsonTopic, UUID.randomUUID().toString(), objectMapper.writeValueAsString(personInfo));
             LOGGER.info("Message with the text \"" + personInfo + "\" added to  kafka topic \"" + jsonTopic + "\"");
         } catch (JsonProcessingException ignore) {
         }
